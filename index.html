@@ -1,1 +1,51 @@
-
+import type { Metadata } from "next";
+import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+ 
+// NOTE: next/font/google (Inter + Space Grotesk) requires network access to
+// fonts.googleapis.com at build time. If your deployment can reach Google
+// Fonts, swap back to `import { Inter, Space_Grotesk } from "next/font/google"`
+// and re-add the variable classNames below. Until then, globals.css falls
+// back to a clean system font stack.
+ 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.driveeasy.com";
+ 
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "DriveEasy Car Rentals | Self-Drive & Chauffeur Cars",
+    template: "%s | DriveEasy Car Rentals",
+  },
+  description:
+    "Book self-drive or chauffeur-driven cars in minutes. Transparent fares, verified drivers, instant online booking with secure payments.",
+  keywords: ["car rental", "cab booking", "driver service", "outstation taxi", "self drive cars", "DriveEasy"],
+  openGraph: {
+    title: "DriveEasy Car Rentals",
+    description: "Self-drive & chauffeur-driven car rentals with transparent, instant fare calculation.",
+    url: siteUrl,
+    siteName: "DriveEasy Car Rentals",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DriveEasy Car Rentals",
+    description: "Self-drive & chauffeur-driven car rentals with transparent, instant fare calculation.",
+  },
+  alternates: { canonical: "/" },
+};
+ 
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased min-h-screen flex flex-col">
+        <ThemeProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
